@@ -1,20 +1,23 @@
-package model.maze;
+package com.pride.dungeon.model.maze;
 
-import javafx.util.Pair;
+
+import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MazeGenerator {
 
-    private static int defaultRoomTries = 20;
-    private static int defaultRoomMinHeight = 3;
-    private static int defaultRoomMaxHeight = 7;
-    private static int defaultRoomMinWidth = 3;
-    private static int defaultRoomMaxWidth = 7;
-    private static int defaultRoomMinEntrances = 1;
-    private static int defaultRoomMaxEntrances = 2;
+
+public class MazeGenerator {
+    
+    private static int defaultRoomTries         = 20;
+    private static int defaultRoomMinHeight     = 3;
+    private static int defaultRoomMaxHeight     = 7;
+    private static int defaultRoomMinWidth      = 3;
+    private static int defaultRoomMaxWidth      = 7;
+    private static int defaultRoomMinEntrances  = 1;
+    private static int defaultRoomMaxEntrances  = 2;
     public enum MazeType {
         RANDOM,
         PREFER_HORIZONTAL,
@@ -100,10 +103,10 @@ public class MazeGenerator {
     }
     private static void connectRoomsToCorridors(int[][] maze, ArrayList<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> rooms, int minRoomEntrances, int maxRoomEntrances, Random random) {
         for (Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> room : rooms) {
-            int left = room.getKey().getKey();
-            int top = room.getKey().getValue();
-            int roomWidth = room.getValue().getKey();
-            int roomHeight = room.getValue().getValue();
+            int left = room.first.first;
+            int top = room.first.second;
+            int roomWidth = room.second.first;
+            int roomHeight = room.second.second;
 
             ArrayList<Pair<Integer, Integer>> entrances = new ArrayList<>();
             if (left > 1) {
@@ -137,7 +140,7 @@ public class MazeGenerator {
             Collections.shuffle(entrances, random);
             int entranceCount = minRoomEntrances + random.nextInt(maxRoomEntrances - minRoomEntrances + 1);
             for (int _entr = 0; _entr < entranceCount && _entr < entrances.size(); _entr++) {
-                maze[entrances.get(_entr).getValue()][entrances.get(_entr).getKey()] = 0;
+                maze[entrances.get(_entr).second][entrances.get(_entr).first] = 0;
             }
         }
     }
