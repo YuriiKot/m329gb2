@@ -10,7 +10,7 @@ import java.util.Random;
 
 
 public class MazeGenerator {
-    
+
     private static int defaultRoomTries         = 20;
     private static int defaultRoomMinHeight     = 3;
     private static int defaultRoomMaxHeight     = 7;
