@@ -1,4 +1,9 @@
 package com.pride.dungeon.managers;
+import android.util.Log;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.pride.dungeon.model.Resources;
 
 
@@ -6,9 +11,19 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ResourceManager {
+    private static class ResourseTempStructure {
+        private static class ResourceChunk {
+            public String name;
+            public String filename;
+            public String filetype;
+        }
+        public List<ResourceChunk> chunks;
+    }
     public static void loadResources(InputStream inputStream) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -19,15 +34,9 @@ public class ResourceManager {
             }
             String jsondata = sb.toString();
 
-            JSONArray jsonArr = new JSONArray(jsondata);
-            for (int i = 0; i < jsonArr.length(); i++) {
-                JSONObject row = jsonArr.getJSONObject(i);
-                Iterator<String> iterator = row.keys();
-                while (iterator.hasNext()) {
-                    String name = iterator.next();
-                    JSONArray array = (JSONArray) row.get(name);
-                    Resources.setResource(name, (String)array.get(0), (String)array.get(1));
-                }
+            ResourseTempStructure resourseTempStructure = (new ObjectMapper()).readValue(jsondata, ResourseTempStructure.class);
+            for (ResourseTempStructure.ResourceChunk chunk : resourseTempStructure.chunks) {
+                Resources.setResource(chunk.name, chunk.filename, chunk.filetype);
             }
 
         } catch (Exception e) {
