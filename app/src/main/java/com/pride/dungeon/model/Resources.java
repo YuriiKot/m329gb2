@@ -1,6 +1,6 @@
 package com.pride.dungeon.model;
 
-import android.util.Pair;
+import com.pride.dungeon.util.Pair;
 
 import java.util.Hashtable;
 

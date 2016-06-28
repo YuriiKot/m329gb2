@@ -23,6 +23,7 @@ public class ResourceManager {
                 sb.append((char)data);
                 data = inputStream.read();
             }
+            inputStream.close();
             String jsondata = sb.toString();
 
             ResourseTempStructure resourseTempStructure = (new ObjectMapper()).readValue(jsondata, ResourseTempStructure.class);
