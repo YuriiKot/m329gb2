@@ -7,9 +7,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-
-import com.pride.dungeon.MainActivity;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public GameView(Context context) {

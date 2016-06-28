@@ -1,11 +1,8 @@
 package com.pride.dungeon;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
 
 import com.pride.dungeon.view.GameView;
 
