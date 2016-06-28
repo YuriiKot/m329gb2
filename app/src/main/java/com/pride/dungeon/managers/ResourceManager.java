@@ -1,18 +1,8 @@
 package com.pride.dungeon.managers;
-import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.pride.dungeon.model.Resources;
-
-
-import org.json.JSONObject;
-import org.json.JSONArray;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ResourceManager {
@@ -24,7 +14,8 @@ public class ResourceManager {
         }
         public List<ResourceChunk> chunks;
     }
-    public static void loadResources(InputStream inputStream) {
+    public static Resources loadResources(InputStream inputStream) {
+        Resources resources = null;
         try {
             StringBuilder sb = new StringBuilder();
             int data = inputStream.read();
@@ -35,8 +26,9 @@ public class ResourceManager {
             String jsondata = sb.toString();
 
             ResourseTempStructure resourseTempStructure = (new ObjectMapper()).readValue(jsondata, ResourseTempStructure.class);
+            resources = new Resources();
             for (ResourseTempStructure.ResourceChunk chunk : resourseTempStructure.chunks) {
-                Resources.setResource(chunk.name, chunk.filename, chunk.filetype);
+                resources.setResource(chunk.name, chunk.filename, chunk.filetype);
             }
 
         } catch (Exception e) {
@@ -47,14 +39,18 @@ public class ResourceManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return resources;
         }
     }
-    public static void loadResources(String fileName) {
+    public static Resources loadResources(String fileName) {
+        Resources resources = null;
         try {
             FileInputStream inputStream = new FileInputStream(fileName);
-            loadResources(inputStream);
+            resources = loadResources(inputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            return resources;
         }
     }
 }

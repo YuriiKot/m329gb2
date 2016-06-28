@@ -6,14 +6,17 @@ import java.util.Hashtable;
 
 public class Resources {
 
+    private Hashtable<String, Pair<String, String>> mResources;
 
-    private static Hashtable<String, Pair<String, String>> mResources = new Hashtable<>();
+    public Resources() {
+        mResources = new Hashtable<>();
+    }
 
-    public static void setResource(String name, String fileName, String fileType) {
+    public void setResource(String name, String fileName, String fileType) {
         mResources.put(name, new Pair<String, String>(fileName, fileType));
     }
 
-    public static Pair<String, String> getResource(String name) {
+    public Pair<String, String> getResource(String name) {
         return mResources.get(name);
     }
 }
