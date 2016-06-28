@@ -9,7 +9,7 @@ import android.view.SurfaceHolder;
 
 import com.pride.dungeon.view.GameView;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     static GameView gameView;
 
