@@ -6,6 +6,8 @@ import android.graphics.Paint;
 
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.model.gameobjects.Floor;
+import com.pride.dungeon.model.gameobjects.Wall;
 
 import java.util.Hashtable;
 
@@ -21,7 +23,8 @@ public class SimpleDrawer extends AbstractDrawer {
 
     private SimpleDrawer() {
         spriteMap = new Hashtable<>();
-        //Fill map with records
+        spriteMap.put(Wall.class, resources.getSprite("wall_sprite"));
+        spriteMap.put(Floor.class, resources.getSprite("floor_sprite"));
     }
 
     @Override

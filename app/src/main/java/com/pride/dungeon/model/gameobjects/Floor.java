@@ -6,9 +6,9 @@ import com.pride.dungeon.controllers.updaters.AbstractUpdater;
 import com.pride.dungeon.controllers.updaters.concrete.EmptyUpdater;
 import com.pride.dungeon.model.GameObject;
 
-public class Wall extends GameObject {
-    public Wall(float x, float y) {
-        super(x, y, false);
+public class Floor extends GameObject {
+    public Floor(float x, float y) {
+        super(x, y, true);
     }
 
     @Override

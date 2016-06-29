@@ -1,0 +1,14 @@
+{
+  "chunks" : [
+    {
+      "name" : "wall_sprite",
+      "filename" : "wall.png",
+      "filetype" : "png"
+    },
+	{
+      "name" : "floor_sprite",
+      "filename" : "floor.png",
+      "filetype" : "png"
+    }
+  ]
+}
