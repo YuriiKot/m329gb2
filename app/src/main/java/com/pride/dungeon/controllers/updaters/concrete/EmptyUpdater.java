@@ -15,6 +15,5 @@ public class EmptyUpdater extends AbstractUpdater {
 
     @Override
     public void update(GameObject gameObject) {
-
     }
 }

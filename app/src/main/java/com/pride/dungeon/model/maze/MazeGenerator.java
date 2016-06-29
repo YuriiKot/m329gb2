@@ -144,13 +144,13 @@ public class MazeGenerator {
             }
         }
     }
-    public static int[][] getMaze(int width, int height, MazeType mazeType, int seed) {
+    public static Maze getMaze(int width, int height, MazeType mazeType, int seed) {
         return getMaze(width, height, mazeType, defaultRoomTries, defaultRoomMinHeight, defaultRoomMaxHeight, defaultRoomMinWidth, defaultRoomMaxWidth, seed);
     }
-    public static int[][] getMaze(int width, int height, MazeType mazeType, int roomTries, int minRoomHeight, int maxRoomHeight, int minRoomWidth, int maxRoomWidth, int seed) {
+    public static Maze getMaze(int width, int height, MazeType mazeType, int roomTries, int minRoomHeight, int maxRoomHeight, int minRoomWidth, int maxRoomWidth, int seed) {
         return getMaze(width, height, mazeType, roomTries, minRoomHeight, maxRoomHeight, minRoomWidth, maxRoomWidth, defaultRoomMinEntrances, defaultRoomMaxEntrances, seed);
     }
-    public static int[][] getMaze(int width, int height, MazeType mazeType, int roomTries, int minRoomHeight, int maxRoomHeight, int minRoomWidth, int maxRoomWidth, int minRoomEntrances, int maxRoomEntrances, int seed) {
+    public static Maze getMaze(int width, int height, MazeType mazeType, int roomTries, int minRoomHeight, int maxRoomHeight, int minRoomWidth, int maxRoomWidth, int minRoomEntrances, int maxRoomEntrances, int seed) {
         Random random = new Random(seed);
         int[][] maze = new int[height][width];
         for (int i = 0; i < maze.length; i++) {
@@ -170,6 +170,6 @@ public class MazeGenerator {
 
         connectRoomsToCorridors(maze, rooms, minRoomEntrances, maxRoomEntrances, random);
 
-        return maze;
+        return new Maze(maze);
     }
 }

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.managers.ResourceManager;
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.model.ModelHolder;
+import com.pride.dungeon.model.ModelLoader;
 import com.pride.dungeon.model.Resources;
 import com.pride.dungeon.model.gameobjects.Floor;
 import com.pride.dungeon.model.gameobjects.Wall;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity {
 
     static GameView gameView;
+    static ModelHolder modelHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +29,11 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ResourceManager.init(getAssets());
-        Resources resources = null;
         try {
-            resources = ResourceManager.loadResourcesMeta(getAssets().open("resources.json"));
+            modelHolder = ModelLoader.loadModel(getAssets().open("resources.json"), getAssets().open("1.lvl"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AbstractDrawer.setResources(resources);
 
         Handler handler = new Handler();
         GameLoop gameLoop = new GameLoop((GameView) findViewById(R.id.gameView));

@@ -1,7 +1,6 @@
 package com.pride.dungeon.managers;
 
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pride.dungeon.model.Resources;
@@ -53,7 +52,7 @@ public class ResourceManager {
     public static Resources loadResourcesMeta(String fileName) {
         Resources resources = null;
         try {
-            FileInputStream inputStream = new FileInputStream(fileName);
+            InputStream inputStream = assetManager.open(fileName);
             resources = loadResourcesMeta(inputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

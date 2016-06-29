@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.pride.dungeon.model.GameObject;
 import com.pride.dungeon.view.GameView;
 
 
@@ -23,9 +24,10 @@ public class GameLoop implements Runnable {
 
             if (canvas != null)
             {
-                canvas.drawColor(Color.WHITE);
-                canvas.drawRect(80+x, 80+x, 120+x, 120+x, new Paint());
-                x+= 4;
+                for (GameObject gameObject : GameActivity.modelHolder.gameObjects) {
+                    gameObject.getDrawer().draw(gameObject, canvas);
+                    gameObject.getUpdater().update(gameObject);
+                }
                 gameView.getHolder().unlockCanvasAndPost(canvas);
             }
 
