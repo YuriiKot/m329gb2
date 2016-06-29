@@ -8,9 +8,11 @@ public abstract class GameObject {
     public float y;
     public int mazeX;
     public int mazeY;
-    public GameObject(float x, float y) {
+    public boolean transparent;
+    public GameObject(float x, float y, boolean transparent) {
         this.x = x;
         this.y = y;
+        this.transparent = transparent;
     }
     public abstract AbstractDrawer getDrawer();
     public abstract AbstractUpdater getUpdater();
