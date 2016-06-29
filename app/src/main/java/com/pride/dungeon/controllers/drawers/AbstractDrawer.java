@@ -10,5 +10,5 @@ public abstract class AbstractDrawer {
     public static void setResources(Resources resources) {
         AbstractDrawer.resources = resources;
     }
-    public abstract void draw(GameObject gameObject, Canvas canvas);
+    public abstract void draw(GameObject gameObject, Canvas canvas, float dx, float dy);
 }

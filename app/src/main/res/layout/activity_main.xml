@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pride.dungeon.GameActivity"
-    android:background="#d2f">
+    tools:context="com.pride.dungeon.GameActivity">
 
     <com.pride.dungeon.view.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         />
 
 </RelativeLayout>

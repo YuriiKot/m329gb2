@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.util.Pair;
 import com.pride.dungeon.view.GameView;
 
 
@@ -29,8 +30,12 @@ public class GameLoopThread extends Thread {
 
             if (canvas != null)
             {
+                canvas.drawARGB(255,255,255,255);
                 for (GameObject gameObject : GameActivity.modelHolder.gameObjects) {
-                    gameObject.getDrawer().draw(gameObject, canvas);
+                    gameObject.getDrawer().draw(gameObject,
+                            canvas,
+                            GameActivity.modelHolder.player.x,
+                            GameActivity.modelHolder.player.y);
                     gameObject.getUpdater().update(gameObject);
                 }
                 gameView.getHolder().unlockCanvasAndPost(canvas);

@@ -3,6 +3,7 @@ package com.pride.dungeon.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.managers.ResourceManager;
+import com.pride.dungeon.model.gameobjects.Player;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,17 +29,19 @@ public class ModelLoader {
         try {
             holder = (new ObjectMapper()).readValue(jsondata, ModelHolder.class);
             holder.gameObjects = new ArrayList<>();
+            holder.player = new Player( 100, 100);
             holder.resources = ResourceManager.loadResourcesMeta(resourceFileStream);
             AbstractDrawer.setResources(holder.resources);
 
             for (int i = 0; i < holder.maze.maze.length; i++) {
                 for (int j = 0; j < holder.maze.maze[i].length; j++) {
-                    holder.gameObjects.add(GameObjectMapper.getObjectById(holder.maze.maze[i][j], i * 32, j * 32, false));
+                    holder.gameObjects.add(GameObjectMapper.getObjectById(holder.maze.maze[i][j], i * 64, j * 64, false));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return holder;
     }
 }
