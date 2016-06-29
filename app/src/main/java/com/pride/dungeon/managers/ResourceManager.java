@@ -1,11 +1,15 @@
 package com.pride.dungeon.managers;
 
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pride.dungeon.model.Resources;
 import java.io.*;
 import java.util.List;
 
 public class ResourceManager {
+    private static AssetManager assetManager;
     private static class ResourseTempStructure {
         private static class ResourceChunk {
             public String name;
@@ -14,7 +18,10 @@ public class ResourceManager {
         }
         public List<ResourceChunk> chunks;
     }
-    public static Resources loadResources(InputStream inputStream) {
+    public static void init(AssetManager assetManager) {
+        ResourceManager.assetManager = assetManager;
+    }
+    public static Resources loadResourcesMeta(InputStream inputStream) {
         Resources resources = null;
         try {
             StringBuilder sb = new StringBuilder();
@@ -27,9 +34,9 @@ public class ResourceManager {
             String jsondata = sb.toString();
 
             ResourseTempStructure resourseTempStructure = (new ObjectMapper()).readValue(jsondata, ResourseTempStructure.class);
-            resources = new Resources();
+            resources = new Resources(assetManager);
             for (ResourseTempStructure.ResourceChunk chunk : resourseTempStructure.chunks) {
-                resources.setResource(chunk.name, chunk.filename, chunk.filetype);
+                resources.setResourceMeta(chunk.name, chunk.filename, chunk.filetype);
             }
 
         } catch (Exception e) {
@@ -43,11 +50,11 @@ public class ResourceManager {
             return resources;
         }
     }
-    public static Resources loadResources(String fileName) {
+    public static Resources loadResourcesMeta(String fileName) {
         Resources resources = null;
         try {
             FileInputStream inputStream = new FileInputStream(fileName);
-            resources = loadResources(inputStream);
+            resources = loadResourcesMeta(inputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
