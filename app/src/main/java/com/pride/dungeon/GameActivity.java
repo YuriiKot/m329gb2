@@ -63,11 +63,11 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
                                 float distanceY) {
-            Log.d("GameActivity","onScroll1: " + event1.toString());
-            Log.d("GameActivity","onScroll2: " + event2.toString());
+            //Log.d("GameActivity","onScroll1: " + event1.toString());
+            //Log.d("GameActivity","onScroll2: " + event2.toString());
 
-            modelHolder.player.x -= distanceX;
-            modelHolder.player.y -= distanceY;
+            modelHolder.player.x += distanceX;
+            modelHolder.player.y += distanceY;
             return true;
         }
     }

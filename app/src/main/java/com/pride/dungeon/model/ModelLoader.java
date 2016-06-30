@@ -1,5 +1,8 @@
 package com.pride.dungeon.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.managers.ResourceManager;
@@ -11,6 +14,29 @@ import java.util.ArrayList;
 
 public class ModelLoader {
     public static ModelHolder loadModel(InputStream resourceFileStream, InputStream levelFileStream) {
+        String jsondata = readJSONString(levelFileStream);
+
+        return getModelHolder(resourceFileStream, jsondata);
+    }
+
+    @Nullable
+    private static ModelHolder getModelHolder(InputStream resourceFileStream, String jsondata) {
+        ModelHolder holder = null;
+        try {
+            holder = (new ObjectMapper()).readValue(jsondata, ModelHolder.class);
+            holder.gameObjects = new ArrayList<>();
+            holder.player = new Player( 100, 100);
+            holder.resources = ResourceManager.loadResourcesMeta(resourceFileStream);
+            AbstractDrawer.setResources(holder.resources);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return holder;
+    }
+
+    @NonNull
+    private static String readJSONString(InputStream levelFileStream) {
         StringBuilder sb = new StringBuilder();
         int data = 0;
         try {
@@ -23,25 +49,6 @@ public class ModelLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String jsondata = sb.toString();
-
-        ModelHolder holder = null;
-        try {
-            holder = (new ObjectMapper()).readValue(jsondata, ModelHolder.class);
-            holder.gameObjects = new ArrayList<>();
-            holder.player = new Player( 100, 100);
-            holder.resources = ResourceManager.loadResourcesMeta(resourceFileStream);
-            AbstractDrawer.setResources(holder.resources);
-
-            for (int i = 0; i < holder.maze.maze.length; i++) {
-                for (int j = 0; j < holder.maze.maze[i].length; j++) {
-                    holder.gameObjects.add(GameObjectMapper.getObjectById(holder.maze.maze[i][j], i * 64, j * 64, false));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return holder;
+        return sb.toString();
     }
 }
