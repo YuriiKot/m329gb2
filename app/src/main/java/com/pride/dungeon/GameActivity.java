@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import com.pride.dungeon.managers.ResourceManager;
 import com.pride.dungeon.model.ModelHolder;
 import com.pride.dungeon.model.ModelLoader;
+import com.pride.dungeon.model.Settings;
 import com.pride.dungeon.view.GameView;
 
 import java.io.IOException;
@@ -77,10 +78,10 @@ public class GameActivity extends AppCompatActivity {
         }
         @Override
         public boolean onDown(MotionEvent event) {
-            float dxIndex = (((event.getX() - gameView.getWidth() / 2 )) / 64);
-            float dyIndex = (((event.getY() - gameView.getHeight() / 2)) / 64);
-            float xTo = (float) (Math.round(dxIndex) * 64 + modelHolder.player.x);
-            float yTo = (float) (Math.round(dyIndex) * 64 + modelHolder.player.y);
+            float dxIndex = (((event.getX() - gameView.getWidth() / 2 )) / Settings.cellWidth);
+            float dyIndex = (((event.getY() - gameView.getHeight() / 2)) / Settings.cellHeight);
+            float xTo = (float) (Math.round(dxIndex) * Settings.cellWidth + modelHolder.player.x);
+            float yTo = (float) (Math.round(dyIndex) * Settings.cellHeight + modelHolder.player.y);
 
             modelHolder.player.moveTo(xTo, yTo);
             return true;

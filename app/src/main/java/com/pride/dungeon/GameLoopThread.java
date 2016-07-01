@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.pride.dungeon.model.GameObject;
 import com.pride.dungeon.model.ModelHolder;
+import com.pride.dungeon.model.Settings;
 import com.pride.dungeon.model.maze.MazeFragment;
 import com.pride.dungeon.model.maze.MazeFragmentator;
 import com.pride.dungeon.util.Pair;
@@ -37,10 +38,10 @@ public class GameLoopThread extends Thread {
                 canvas.translate(gameView.getWidth() / 2, gameView.getHeight() / 2);
 
                 MazeFragment mazeFragment = MazeFragmentator.getMazeFragment(GameActivity.modelHolder.maze,
-                        (int)(GameActivity.modelHolder.player.x / 64 - 4),
-                        (int)(GameActivity.modelHolder.player.x / 64 + 4),
-                        (int)(GameActivity.modelHolder.player.y / 64 - 4),
-                        (int)(GameActivity.modelHolder.player.y / 64 + 4));
+                        (int)(GameActivity.modelHolder.player.x / Settings.cellWidth - 4),
+                        (int)(GameActivity.modelHolder.player.x / Settings.cellWidth + 4),
+                        (int)(GameActivity.modelHolder.player.y / Settings.cellHeight - 4),
+                        (int)(GameActivity.modelHolder.player.y / Settings.cellHeight + 4));
                 mazeFragment.getDrawer().draw(mazeFragment, canvas, -GameActivity.modelHolder.player.x, -GameActivity.modelHolder.player.y);
                 for (GameObject gameObject : GameActivity.modelHolder.gameObjects) {
                     gameObject.getDrawer().draw(gameObject,

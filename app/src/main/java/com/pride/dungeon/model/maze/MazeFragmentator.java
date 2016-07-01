@@ -2,6 +2,7 @@ package com.pride.dungeon.model.maze;
 
 import com.pride.dungeon.model.GameObject;
 import com.pride.dungeon.model.GameObjectMapper;
+import com.pride.dungeon.model.Settings;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class MazeFragmentator {
 
             for (int x = xFrom; x <= xTo; x++) {
                 for (int y = yFrom; y <= yTo; y++) {
-                    mazeObjects.add(GameObjectMapper.getObjectById(maze.maze[x][y], x * 64, y * 64));
+                    mazeObjects.add(GameObjectMapper.getObjectById(maze.maze[x][y], x * Settings.cellWidth, y * Settings.cellHeight));
                 }
             }
 
