@@ -26,7 +26,7 @@ public class SimpleDrawer extends AbstractDrawer {
         spriteMap = new Hashtable<>();
         spriteMap.put(Wall  .class  , resources.getSprite("wall_sprite")    );
         spriteMap.put(Floor .class  , resources.getSprite("floor_sprite")   );
-        spriteMap.put(Player.class  , resources.getSprite("wall_sprite")    );
+        spriteMap.put(Player.class  , resources.getSprite("player_sprite")    );
     }
 
     @Override
@@ -34,8 +34,8 @@ public class SimpleDrawer extends AbstractDrawer {
         Bitmap sprite = spriteMap.get(gameObject.getClass());
         if (sprite != null) {
             canvas.drawBitmap(sprite,
-                    gameObject.x + dx,
-                    gameObject.y + dy,
+                    gameObject.x + dx - sprite.getHeight() / 2,
+                    gameObject.y + dy - sprite.getWidth() / 2,
                     null);
         }
     }

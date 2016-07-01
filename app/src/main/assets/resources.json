@@ -5,9 +5,14 @@
       "filename" : "wall.png",
       "filetype" : "png"
     },
-	{
+    {
       "name" : "floor_sprite",
       "filename" : "floor.png",
+      "filetype" : "png"
+    },
+    {
+      "name" : "player_sprite",
+      "filename" : "player.png",
       "filetype" : "png"
     }
   ]

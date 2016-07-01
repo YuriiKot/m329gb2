@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.pride.dungeon.managers.ResourceManager;
 import com.pride.dungeon.model.ModelHolder;
@@ -25,6 +27,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         gameView = (GameView) findViewById(R.id.gameView);
         mGestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
@@ -66,8 +71,18 @@ public class GameActivity extends AppCompatActivity {
             //Log.d("GameActivity","onScroll1: " + event1.toString());
             //Log.d("GameActivity","onScroll2: " + event2.toString());
 
-            modelHolder.player.x += distanceX;
-            modelHolder.player.y += distanceY;
+        //    modelHolder.player.x += distanceX;
+        //    modelHolder.player.y += distanceY;
+            return true;
+        }
+        @Override
+        public boolean onDown(MotionEvent event) {
+            float dxIndex = (((event.getX() - gameView.getWidth() / 2 )) / 64);
+            float dyIndex = (((event.getY() - gameView.getHeight() / 2)) / 64);
+            float xTo = (float) (Math.round(dxIndex) * 64 + modelHolder.player.x);
+            float yTo = (float) (Math.round(dyIndex) * 64 + modelHolder.player.y);
+
+            modelHolder.player.moveTo(xTo, yTo);
             return true;
         }
     }

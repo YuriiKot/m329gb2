@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.managers.ResourceManager;
 import com.pride.dungeon.model.gameobjects.Player;
+import com.pride.dungeon.util.Move;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ public class ModelLoader {
         try {
             holder = (new ObjectMapper()).readValue(jsondata, ModelHolder.class);
             holder.gameObjects = new ArrayList<>();
-            holder.player = new Player( 100, 100);
+            holder.player = new Player( 128, 64);
             holder.resources = ResourceManager.loadResourcesMeta(resourceFileStream);
             AbstractDrawer.setResources(holder.resources);
         } catch (IOException e) {

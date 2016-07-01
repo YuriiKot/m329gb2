@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.model.ModelHolder;
 import com.pride.dungeon.model.maze.MazeFragment;
 import com.pride.dungeon.model.maze.MazeFragmentator;
 import com.pride.dungeon.util.Pair;
@@ -48,6 +49,8 @@ public class GameLoopThread extends Thread {
                             GameActivity.modelHolder.player.y);
                     gameObject.getUpdater().update(gameObject);
                 }
+                GameActivity.modelHolder.player.getDrawer().draw(GameActivity.modelHolder.player, canvas, -GameActivity.modelHolder.player.x, -GameActivity.modelHolder.player.y);
+                GameActivity.modelHolder.player.getUpdater().update(GameActivity.modelHolder.player);
                 gameView.getHolder().unlockCanvasAndPost(canvas);
             }
 

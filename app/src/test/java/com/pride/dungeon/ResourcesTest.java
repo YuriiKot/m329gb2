@@ -18,8 +18,8 @@ public class ResourcesTest {
                 "{\"filename\" : \"filename2\", \"filetype\" : \"filetype2\", \"name\" : \"name2\"}" +
                 "]}";
         InputStream inputStream = new ByteArrayInputStream(json.getBytes());
-        Resources resources = ResourceManager.loadResources(inputStream);
-        assertTrue(new String("filename1").equals(resources.getResource("name1").first));
-        assertTrue(new String("filetype2").equals(resources.getResource("name2").second));
+        Resources resources = ResourceManager.loadResourcesMeta(inputStream);
+        assertTrue(new String("filename1").equals(resources.getResourceMeta("name1").first));
+        assertTrue(new String("filetype2").equals(resources.getResourceMeta("name2").second));
     }
 }
