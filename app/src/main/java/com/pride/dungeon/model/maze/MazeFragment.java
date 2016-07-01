@@ -13,7 +13,7 @@ public class MazeFragment extends GameObject {
     public ArrayList<GameObject> mazeObjects;
 
     public MazeFragment(ArrayList<GameObject> mazeObjects) {
-        super(0, 0, true);
+        super(0, 0, 0, 0, true);
         this.mazeObjects = mazeObjects;
     }
 

@@ -8,7 +8,7 @@ import com.pride.dungeon.model.GameObject;
 
 public class Wall extends GameObject {
     public Wall(float x, float y) {
-        super(x, y, false);
+        super(x, y, 48, 48, false);
     }
 
     @Override

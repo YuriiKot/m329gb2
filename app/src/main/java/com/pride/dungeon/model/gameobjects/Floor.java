@@ -8,7 +8,7 @@ import com.pride.dungeon.model.GameObject;
 
 public class Floor extends GameObject {
     public Floor(float x, float y) {
-        super(x, y, true);
+        super(x, y, 64, 64, true);
     }
 
     @Override

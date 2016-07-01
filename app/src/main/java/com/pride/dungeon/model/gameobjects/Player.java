@@ -6,20 +6,25 @@ import com.pride.dungeon.controllers.updaters.AbstractUpdater;
 import com.pride.dungeon.controllers.updaters.concrete.EmptyUpdater;
 import com.pride.dungeon.controllers.updaters.concrete.PlayerUpdater;
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.model.ModelHolder;
+import com.pride.dungeon.model.PlayerMoveProcessor;
 import com.pride.dungeon.util.Move;
+
+import java.util.ArrayList;
 
 public class Player extends GameObject {
 
-    public Move curMove;
+    public ArrayList<Move> moves;
     public float speed = 5;
 
     public Player(float x, float y) {
-        super(x, y, true);
+        super(x, y, 48, 48, true);
     }
 
-    public void moveTo(float x, float y) {
-        if (curMove == null && (x != this.x || y != this.y)) {
-            curMove = new Move(this.x, x, this.y, y);
+    public void moveTo(float x, float y, ModelHolder modelHolder) {
+        if (moves == null && (x != this.x || y != this.y)) {
+            Move theoreticalMove = new Move(this.x, x, this.y, y);
+            moves = PlayerMoveProcessor.processMove(theoreticalMove, modelHolder);
         }
     }
 

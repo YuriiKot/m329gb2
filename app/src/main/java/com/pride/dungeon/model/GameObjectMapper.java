@@ -4,6 +4,9 @@ import com.pride.dungeon.model.gameobjects.Floor;
 import com.pride.dungeon.model.gameobjects.Wall;
 
 public class GameObjectMapper {
+    public static GameObject getObjectById(int id) {
+        return getObjectById(id, 0, 0);
+    }
     public static GameObject getObjectById(int id, float x, float y) {
         GameObject gameObject = null;
         switch (id) {

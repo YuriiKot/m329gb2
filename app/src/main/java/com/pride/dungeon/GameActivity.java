@@ -83,7 +83,9 @@ public class GameActivity extends AppCompatActivity {
             float xTo = (float) (Math.round(dxIndex) * Settings.cellWidth + modelHolder.player.x);
             float yTo = (float) (Math.round(dyIndex) * Settings.cellHeight + modelHolder.player.y);
 
-            modelHolder.player.moveTo(xTo, yTo);
+
+
+            modelHolder.player.moveTo(xTo, yTo, modelHolder);
             return true;
         }
     }
