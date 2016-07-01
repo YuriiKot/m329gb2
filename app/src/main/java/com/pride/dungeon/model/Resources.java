@@ -3,6 +3,7 @@ package com.pride.dungeon.model;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 
 import com.pride.dungeon.util.Pair;
 
@@ -13,26 +14,24 @@ public class Resources {
 
     AssetManager assetManager;
 
-    private Hashtable<String, Pair<String, String>> mResources;
+    private Hashtable<String, Pair<String, String>> mResources = new Hashtable<>();
 
-    private Hashtable<String, Bitmap> mSprites;
+    private Hashtable<String, Bitmap> mSprites = new Hashtable<>();
 
     public Resources(AssetManager assetManager) {
-        mResources = new Hashtable<>();
-        mSprites = new Hashtable<>();
         this.assetManager = assetManager;
     }
 
-    public void setResourceMeta(String name, String fileName, String fileType) {
-        mResources.put(name, new Pair<String, String>(fileName, fileType));
+    public void setResourceMeta(String resStrId, String fileName, String fileType) {
+        mResources.put(resStrId, new Pair<String, String>(fileName, fileType));
     }
 
     public Pair<String, String> getResourceMeta(String name) {
         return mResources.get(name);
     }
 
-    public Bitmap getSprite(String name) {
-        Pair<String, String> spriteFileMeta = getResourceMeta(name);
+    public Bitmap getSprite(@NonNull String resStrId) {
+        Pair<String, String> spriteFileMeta = getResourceMeta(resStrId);
         if (spriteFileMeta != null) {
             String fileName = spriteFileMeta.first;
             if (fileName != null) {

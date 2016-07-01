@@ -19,7 +19,9 @@ public class PlayerUpdater extends AbstractUpdater {
         if (gameObject instanceof Player) {
             Player player = (Player)gameObject;
             if (player.moves != null) {
-                if (player.moves.size() > 0) {
+                if (player.moves.size() > 0 &&
+                        (player.moves.get(0).xFrom != player.moves.get(0).xTo ||
+                                player.moves.get(0).yFrom != player.moves.get(0).yTo))   {
                     player.x += player.speed * Math.cos(player.moves.get(0).angle);
                     player.y += player.speed * Math.sin(player.moves.get(0).angle);
                     //If missed target position

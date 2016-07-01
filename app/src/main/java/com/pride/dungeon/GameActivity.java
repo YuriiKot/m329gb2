@@ -21,6 +21,7 @@ import java.io.IOException;
 
 public class GameActivity extends AppCompatActivity {
 
+    GameLoopThread gameLoop;
     static GameView gameView;
     static ModelHolder modelHolder;
     GestureDetectorCompat mGestureDetector;
@@ -28,15 +29,18 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setFullScreen();
         setContentView(R.layout.activity_main);
         gameView = (GameView) findViewById(R.id.gameView);
         mGestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
         loadModel();
-        runMainLoop();
+    }
+
+    private void setFullScreen() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -45,10 +49,8 @@ public class GameActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-
-
     private void runMainLoop() {
-        GameLoopThread gameLoop = new GameLoopThread(gameView);
+        gameLoop = new GameLoopThread(gameView);
         gameLoop.start();
     }
 
@@ -78,16 +80,29 @@ public class GameActivity extends AppCompatActivity {
         }
         @Override
         public boolean onDown(MotionEvent event) {
-            float dxIndex = (((event.getX() - gameView.getWidth() / 2 )) / Settings.cellWidth);
-            float dyIndex = (((event.getY() - gameView.getHeight() / 2)) / Settings.cellHeight);
-            float xTo = (float) (Math.round(dxIndex) * Settings.cellWidth + modelHolder.player.x);
-            float yTo = (float) (Math.round(dyIndex) * Settings.cellHeight + modelHolder.player.y);
-
-
+            float mazedx = (((event.getX() - gameView.getWidth() / 2 )) / Settings.cellWidth);
+            float mazedy = (((event.getY() - gameView.getHeight() / 2)) / Settings.cellHeight);
+            float xTo = (float) (Math.round(mazedx) * Settings.cellWidth + modelHolder.player.x);
+            float yTo = (float) (Math.round(mazedy) * Settings.cellHeight + modelHolder.player.y);
 
             modelHolder.player.moveTo(xTo, yTo, modelHolder);
+
             return true;
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            gameLoop.wait();
+        }
+        catch (InterruptedException e) {e.printStackTrace();}
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        runMainLoop();
+    }
 }
