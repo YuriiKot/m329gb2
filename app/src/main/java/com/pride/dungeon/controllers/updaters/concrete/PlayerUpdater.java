@@ -22,6 +22,9 @@ public class PlayerUpdater extends AbstractUpdater {
                 if (player.moves.size() > 0 &&
                         (player.moves.get(0).xFrom != player.moves.get(0).xTo ||
                                 player.moves.get(0).yFrom != player.moves.get(0).yTo))   {
+                    if (player.speed < player.maxspeed) {
+                        player.speed += player.acceleration;
+                    }
                     player.x += player.speed * Math.cos(player.moves.get(0).angle);
                     player.y += player.speed * Math.sin(player.moves.get(0).angle);
                     //If missed target position
@@ -33,6 +36,7 @@ public class PlayerUpdater extends AbstractUpdater {
                     }
                 } else {
                     player.moves = null;
+                    player.speed = 0;
                 }
             }
         }

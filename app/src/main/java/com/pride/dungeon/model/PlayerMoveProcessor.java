@@ -24,18 +24,26 @@ public class PlayerMoveProcessor {
 
         if (mazeXTo == mazeXFrom) {
             int direction = mazeYTo > mazeYFrom ? 1 : -1;
-                for (int i = mazeYFrom; i != mazeYTo; i+=direction) {
-                    if (!GameObjectMapper.getObjectById(holder.maze.maze[mazeXFrom][i+direction]).transparent) {
-                        move.yTo = (i) * Settings.cellHeight;
+                for (int i = mazeYFrom; i != mazeYTo; i += direction) {
+                    if (!GameObjectMapper.getObjectById(holder.maze.maze[mazeXFrom][i + direction]).transparent) {
+                        move.yTo = i * Settings.cellHeight;
+                        move.yTo += direction * (2 * Settings.cellHeight -
+                                (GameObjectMapper.getObjectById(holder.maze.maze[mazeXFrom][i + direction]).hitboxHeight) - holder.player.hitboxHeight) / 2;
+                        Move bouncing = new Move(move.xTo, move.xTo , move.yTo, i * Settings.cellHeight);
+                        legitMoves.add(bouncing);
                         break;
                     }
                 }
         }
         else if(mazeYTo == mazeYFrom) {
             int direction = mazeXTo > mazeXFrom ? 1 : -1;
-                for (int i = mazeXFrom; i != mazeXTo ; i+=direction) {
-                    if (!GameObjectMapper.getObjectById(holder.maze.maze[i+direction][mazeYFrom]).transparent) {
-                        move.xTo = (i) * Settings.cellWidth;
+                for (int i = mazeXFrom; i != mazeXTo ; i += direction) {
+                    if (!GameObjectMapper.getObjectById(holder.maze.maze[i + direction][mazeYFrom]).transparent) {
+                        move.xTo = i * Settings.cellWidth;
+                        move.xTo += direction * (2 * Settings.cellWidth -
+                                (GameObjectMapper.getObjectById(holder.maze.maze[i + direction][mazeYFrom]).hitboxWidth) - holder.player.hitboxWidth) / 2;
+                        Move bouncing = new Move(move.xTo, i * Settings.cellWidth , move.yTo, move.yTo);
+                        legitMoves.add(bouncing);
                         break;
                     }
                 }

@@ -15,7 +15,9 @@ import java.util.ArrayList;
 public class Player extends GameObject {
 
     public ArrayList<Move> moves;
-    public float speed = 5;
+    public float acceleration = 2;
+    public float maxspeed = 10;
+    public float speed = 0;
 
     public Player(float x, float y) {
         super(x, y, 48, 48, true);
