@@ -16,7 +16,7 @@ public class Player extends GameObject {
 
     public ArrayList<Move> moves;
     public float acceleration = 2;
-    public float maxspeed = 10;
+    public float maxspeed = 12;
     public float speed = 0;
 
     public Player(float x, float y) {

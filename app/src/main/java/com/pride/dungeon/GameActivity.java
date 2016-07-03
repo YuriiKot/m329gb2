@@ -69,17 +69,27 @@ public class GameActivity extends AppCompatActivity {
         private static final String DEBUG_TAG = "Gestures";
 
         @Override
-        public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
-                                float distanceY) {
-            //Log.d("GameActivity","onScroll1: " + event1.toString());
-            //Log.d("GameActivity","onScroll2: " + event2.toString());
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
+            if (event1.getRawX() - event2.getRawX() > gameView.getWidth() * Settings.widthFlingCoef) {
+                modelHolder.player.moveTo(0, modelHolder.player.y, modelHolder);
+            } else if (event2.getRawX() - event1.getRawX() > gameView.getWidth() * Settings.widthFlingCoef) {
+                modelHolder.player.moveTo(modelHolder.maze.width * Settings.cellWidth, modelHolder.player.y, modelHolder);
+            } else if (event1.getRawY() - event2.getRawY() > gameView.getHeight() * Settings.heightFlingCoef) {
+                modelHolder.player.moveTo(modelHolder.player.x, 0, modelHolder);
+            } else if (event2.getRawY() - event1.getRawY() > gameView.getHeight() * Settings.heightFlingCoef) {
+                modelHolder.player.moveTo(modelHolder.player.x, modelHolder.maze.height * Settings.cellHeight, modelHolder);
+            } else {
+                float dx = Math.round((event2.getRawX() - event1.getRawX()) / Settings.dxForSingleCellShift) * Settings.cellWidth;
+                float dy = Math.round((event2.getRawY() - event1.getRawY()) / Settings.dyForSingleCellShift) * Settings.cellHeight;
 
-        //    modelHolder.player.x += distanceX;
-        //    modelHolder.player.y += distanceY;
+                modelHolder.player.moveTo(modelHolder.player.x + dx, modelHolder.player.y + dy, modelHolder);
+            }
+
             return true;
         }
+
         @Override
-        public boolean onDown(MotionEvent event) {
+        public boolean onSingleTapUp(MotionEvent event) {
             float mazedx = (((event.getX() - gameView.getWidth() / 2 )) / Settings.cellWidth);
             float mazedy = (((event.getY() - gameView.getHeight() / 2)) / Settings.cellHeight);
             float xTo = (float) (Math.round(mazedx) * Settings.cellWidth + modelHolder.player.x);
