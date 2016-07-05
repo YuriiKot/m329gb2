@@ -26,6 +26,30 @@ public class GameActivity extends AppCompatActivity {
     static ModelHolder modelHolder;
     GestureDetectorCompat mGestureDetector;
 
+    private class ScrollHolder
+    {
+        float distanceX;
+        float distanceY;
+
+        public ScrollHolder(float distanceX, float distanceY) {
+            this.distanceX = distanceX;
+            this.distanceY = distanceY;
+        }
+
+
+        public void set(float dX, float dY) {
+            this.distanceX = dX;
+            this.distanceY = dY;
+        }
+
+        public void clear(){
+            this.distanceX = 0;
+            this.distanceY = 0;
+        }
+
+    }
+    ScrollHolder scrollHolder = new ScrollHolder(0,0);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +69,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        boolean detectedUp = event.getAction() == MotionEvent.ACTION_UP;
         mGestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
@@ -69,6 +94,12 @@ public class GameActivity extends AppCompatActivity {
         private static final String DEBUG_TAG = "Gestures";
 
         @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            scrollHolder.set(distanceX, distanceY);
+            return true;
+        }
+
+       /* @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
             if (event1.getRawX() - event2.getRawX() > gameView.getWidth() * Settings.widthFlingCoef) {
                 modelHolder.player.moveTo(0, modelHolder.player.y, modelHolder);
@@ -86,7 +117,8 @@ public class GameActivity extends AppCompatActivity {
             }
 
             return true;
-        }
+        }*/
+
 
         @Override
         public boolean onSingleTapUp(MotionEvent event) {
