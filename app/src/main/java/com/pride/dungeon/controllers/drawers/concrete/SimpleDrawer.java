@@ -2,10 +2,13 @@ package com.pride.dungeon.controllers.drawers.concrete;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.MaskFilter;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.pride.dungeon.controllers.drawers.AbstractDrawer;
 import com.pride.dungeon.model.GameObject;
+import com.pride.dungeon.model.Settings;
 import com.pride.dungeon.model.gameobjects.Floor;
 import com.pride.dungeon.model.gameobjects.Player;
 import com.pride.dungeon.model.gameobjects.Wall;
@@ -33,10 +36,12 @@ public class SimpleDrawer extends AbstractDrawer {
     public void draw(GameObject gameObject, Canvas canvas, float dx, float dy) {
         Bitmap sprite = spriteMap.get(gameObject.getClass());
         if (sprite != null) {
-            canvas.drawBitmap(sprite,
-                    gameObject.x + dx - sprite.getHeight() / 2,
-                    gameObject.y + dy - sprite.getWidth() / 2,
-                    null);
+            Rect bitmapRect = new Rect(0, 0, sprite.getWidth(), sprite.getHeight());
+            Rect drawRect = new Rect((int)(gameObject.x + dx - Settings.cellWidth / 2),
+                    (int)(gameObject.y + dy - Settings.cellWidth / 2),
+                    (int)(gameObject.x + dx + Settings.cellHeight / 2),
+                    (int)(gameObject.y + dy + Settings.cellHeight / 2));
+            canvas.drawBitmap(sprite, bitmapRect, drawRect, null);
         }
     }
 }
