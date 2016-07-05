@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.pride.dungeon.controllers.move.MoveEngine;
 import com.pride.dungeon.managers.ResourceManager;
 import com.pride.dungeon.model.ModelHolder;
 import com.pride.dungeon.model.ModelLoader;
@@ -26,29 +27,7 @@ public class GameActivity extends AppCompatActivity {
     static ModelHolder modelHolder;
     GestureDetectorCompat mGestureDetector;
 
-    private class ScrollHolder
-    {
-        float distanceX;
-        float distanceY;
-
-        public ScrollHolder(float distanceX, float distanceY) {
-            this.distanceX = distanceX;
-            this.distanceY = distanceY;
-        }
-
-
-        public void set(float dX, float dY) {
-            this.distanceX = dX;
-            this.distanceY = dY;
-        }
-
-        public void clear(){
-            this.distanceX = 0;
-            this.distanceY = 0;
-        }
-
-    }
-    ScrollHolder scrollHolder = new ScrollHolder(0,0);
+    public static MoveEngine moveEngine = new MoveEngine();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +49,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
         boolean detectedUp = event.getAction() == MotionEvent.ACTION_UP;
+        boolean detectedDown = event.getAction() == MotionEvent.ACTION_DOWN;
+        if(detectedUp)      moveEngine.locked = false;
+        if(detectedDown)    moveEngine.locked = true;
         mGestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
@@ -95,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            scrollHolder.set(distanceX, distanceY);
+            moveEngine.scrollHolder.set(distanceX, distanceY);
             return true;
         }
 
