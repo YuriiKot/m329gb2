@@ -16,15 +16,22 @@ public class Move {
         this.yTo = yTo;
         this.calculateAngle();
     }
+
     public void calculateAngle() {
-        if (xTo != xFrom) {
+       /* if (xTo != xFrom) {
             if (yTo < yFrom) {
                 angle = -(float) Math.acos((xTo - xFrom) / Math.sqrt((xTo - xFrom) * (xTo - xFrom) + (yTo - yFrom) * (yTo - yFrom)));
             } else {
                 angle = (float) Math.acos((xTo - xFrom) / Math.sqrt((xTo - xFrom) * (xTo - xFrom) + (yTo - yFrom) * (yTo - yFrom)));
             }
+        }*/
+        //else
+        if(yTo > yFrom) angle = (float) (Math.PI / 2);
+        else if(yTo < yFrom) angle = -(float) (Math.PI / 2);
+            //angle = (float) Math.asin((yTo - yFrom) / Math.sqrt((xTo - xFrom) * (xTo - xFrom) + (yTo - yFrom) * (yTo - yFrom)));
+        if(Float.isNaN(angle))
+        {
+            Log.d("g", "g");
         }
-        else
-            angle = (float) Math.asin((yTo - yFrom) / Math.sqrt((xTo - xFrom) * (xTo - xFrom) + (yTo - yFrom) * (yTo - yFrom)));
     }
 }

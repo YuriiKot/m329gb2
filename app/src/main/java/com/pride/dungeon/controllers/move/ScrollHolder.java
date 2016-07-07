@@ -5,9 +5,7 @@ public class ScrollHolder
     float distanceX;
     float distanceY;
 
-    public ScrollHolder(float distanceX, float distanceY) {
-        this.distanceX = distanceX;
-        this.distanceY = distanceY;
+    public ScrollHolder() {
     }
 
     public void set(float dX, float dY) {

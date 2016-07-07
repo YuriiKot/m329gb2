@@ -26,8 +26,7 @@ public class GameActivity extends AppCompatActivity {
     static GameView gameView;
     static ModelHolder modelHolder;
     GestureDetectorCompat mGestureDetector;
-
-    public static MoveEngine moveEngine = new MoveEngine();
+    public static MoveEngine moveEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
         mGestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
         loadModel();
+        moveEngine = new MoveEngine(modelHolder);
     }
 
     private void setFullScreen() {
@@ -50,8 +50,8 @@ public class GameActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event){
         boolean detectedUp = event.getAction() == MotionEvent.ACTION_UP;
         boolean detectedDown = event.getAction() == MotionEvent.ACTION_DOWN;
-        if(detectedUp)      moveEngine.locked = false;
-        if(detectedDown)    moveEngine.locked = true;
+        if(detectedUp)      moveEngine.unLock();
+        if(detectedDown)    moveEngine.lock();
         mGestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
@@ -77,7 +77,9 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            moveEngine.scrollHolder.set(distanceX, distanceY);
+            //moveEngine.scrollHolder.set(distanceX, distanceY);
+            //modelHolder.player.x+=distanceX;
+            modelHolder.player.y+=distanceY;
             return true;
         }
 
@@ -109,7 +111,7 @@ public class GameActivity extends AppCompatActivity {
             float xTo = (float) (Math.round(mazedx) * Settings.cellWidth + modelHolder.player.x);
             float yTo = (float) (Math.round(mazedy) * Settings.cellHeight + modelHolder.player.y);
 
-            modelHolder.player.moveTo(xTo, yTo, modelHolder);
+            //modelHolder.player.moveTo(xTo, yTo, modelHolder);
 
             return true;
         }

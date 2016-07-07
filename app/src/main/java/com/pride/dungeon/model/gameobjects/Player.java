@@ -8,6 +8,7 @@ import com.pride.dungeon.controllers.updaters.concrete.PlayerUpdater;
 import com.pride.dungeon.model.GameObject;
 import com.pride.dungeon.model.ModelHolder;
 import com.pride.dungeon.model.PlayerMoveProcessor;
+import com.pride.dungeon.model.PlayerScrollMoveProcessor;
 import com.pride.dungeon.util.Move;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Player extends GameObject {
     public void moveTo(float x, float y, ModelHolder modelHolder) {
         if (moves == null && (x != this.x || y != this.y)) {
             Move theoreticalMove = new Move(this.x, x, this.y, y);
-            moves = PlayerMoveProcessor.processMove(theoreticalMove, modelHolder);
+            moves = PlayerScrollMoveProcessor.processMove(theoreticalMove, modelHolder);
         }
     }
 

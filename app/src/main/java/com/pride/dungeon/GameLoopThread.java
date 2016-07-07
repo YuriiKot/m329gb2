@@ -1,6 +1,7 @@
 package com.pride.dungeon;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.pride.dungeon.model.GameObject;
 import com.pride.dungeon.model.Settings;
